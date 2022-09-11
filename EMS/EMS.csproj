@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EMS.Core.Entities\EMS.Core.Entities.csproj" />
+    <ProjectReference Include="..\EMS.Core.Repository\EMS.Core.Repository.csproj" />
+    <ProjectReference Include="..\EMS.Core.Services\EMS.Core.Services.csproj" />
+    <ProjectReference Include="..\EMS.Core.ViewModelEntitity\EMS.Core.ViewModelEntitity.csproj" />
+    <ProjectReference Include="..\EMS.Infrastructure.Repository\EMS.Infrastructure.Repository.csproj" />
+    <ProjectReference Include="..\EMS.Infrastructure.Services\EMS.Infrastructure.Services.csproj" />
+  </ItemGroup>
+
+</Project>

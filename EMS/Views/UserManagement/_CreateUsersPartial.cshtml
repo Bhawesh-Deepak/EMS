@@ -1,0 +1,106 @@
+﻿@model EMS.Core.Entities.UserManagement.Users
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:400px">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create User Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="CreateUserPost" data-ajax-begin="AjaxCallBegin()" asp-controller="Users" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="CreatedBy" />
+                                    <input type="hidden" asp-for="CreatedDate" />
+                                    <label asp-for="Name">Name</label>
+                                    <input asp-for="Name" class="form-control">
+                                    <span asp-validation-for="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="UserName">User Name</label>
+                                    <input asp-for="UserName" class="form-control">
+                                    <span asp-validation-for="UserName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EmailId">Email Id</label>
+                                    <input asp-for="EmailId" type="email" class="form-control">
+                                    <span asp-validation-for="EmailId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Phone">Phone</label>
+                                    <input asp-for="Phone" type="number" class="form-control">
+                                    <span asp-validation-for="Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="RoleName">Role</label>
+                                    <select asp-for="RoleName" class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="SuperAdmin">Super Admin</option>
+                                        <option value="User">User</option>
+                                    </select>
+                                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Password">Password</label>
+                                    <input asp-for="Password" type="password" class="form-control">
+                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ConfirmPassword">Confirm Password</label>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control">
+                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                               Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>

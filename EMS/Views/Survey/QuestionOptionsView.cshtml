@@ -1,0 +1,169 @@
+﻿@model EMS.Core.ViewModelEntitity.Survey.SurveyVm
+<script src="~/ckeditor/ckeditor.js"></script>
+<section class="content-header">
+    <h1>
+        Question Details
+        <small>Create Question and Options Details</small>
+    </h1>
+</section>
+<section class="content">
+    <div class="box" style="height:900px !important">
+        <div class="box-header with-border">
+            <h3 class="box-title">Questions / Options Details</h3>
+            <a class="btn btn-success pull-right" asp-action="GetQuestionDetails" asp-controller="Survey">
+                <i class="fa fa-list"> &nbsp; List</i>
+            </a>
+        </div>
+        <div class="box-body" style="height:700px !important">
+            <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                  asp-action="CreateSurveyQuestion" asp-controller="Survey" data-ajax-success="Success"
+                  data-ajax-begin="AjaxCallBegin" enctype="multipart/form-data">
+                <div class="box-body" style="height:600px !important">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="hidden" asp-for="QuestionDetail.Id" />
+                            <input type="hidden" asp-for="QuestionDetail.CreatedBy" />
+                            <input type="hidden" asp-for="QuestionDetail.CreatedDate" />
+                            <label asp-for="QuestionDetail.TopicName">Topic Name</label>
+                            <input asp-for="QuestionDetail.TopicName" class="form-control">
+                            <span asp-validation-for="QuestionDetail.TopicName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="QuestionDetail.Question">Question</label>
+                        <textarea asp-for="QuestionDetail.Question" class="form-control ckeditor"></textarea>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-12">
+                        <button class="btn btn-md btn-primary pull-right"
+                                id="addBtn" type="button">
+                            <i class="fa fa-plus">Add Options</i>
+                        </button>
+                        <br />
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Options</th>
+                                    <th class="text-center">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                                @if (Model != null && Model.Options.Any())
+                                {
+                                    var count = 1;
+                                    foreach (var data in Model.Options)
+                                    {
+
+                                        <tr id="@count">
+                                            <td>
+                                                <input type="text" class="form-control" value="@data.OptionValue" name="Option" />
+                                            </td>
+                                            <td>
+                                               <button class="btn btn-danger remove" type="button">
+                                                   <i class="fa fa-trash"></i>
+                                               </button>
+                                            </td>
+                                        </tr>
+                                        count++;
+
+                                    }
+
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="box-footer">
+                    <div class="col-md-10">
+                        <button class="btn btn-success pull-right">
+                            Save
+                        </button>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="reset" class="btn btn-danger pull-left">Cancel</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        CKEDITOR.replace("QuestionDetail_Question");
+    })
+
+    function Success(resp) {
+        $("#sectionUserCreate").removeClass('loading');
+        alertify.success(resp);
+        setTimeout(function () {
+            location.reload();
+        }, 300)
+    }
+
+    function AjaxCallBegin() {
+        $("#sectionUserCreate").addClass('loading');
+    }
+</script>
+
+<script>
+    $(document).ready(function () {
+
+        // Denotes total number of rows
+        var rowIdx = 0;
+
+        // jQuery button click event to add a row
+        $('#addBtn').on('click', function () {
+
+            // Adding a row inside the tbody.
+            $('#tbody').append(`<tr id="R${++rowIdx}">
+             <td class="row-index text-center">
+                    <input type="text" class="form-control" name="Option"/>
+             </td>
+              <td class="text-center">
+                <button class="btn btn-danger remove"
+                  type="button">
+                        <i class="fa fa-trash"/>
+                   </button>
+                </td>
+              </tr>`);
+        });
+
+        // jQuery button click event to remove a row.
+        $('#tbody').on('click', '.remove', function () {
+
+            // Getting all the rows next to the row
+            // containing the clicked button
+            var child = $(this).closest('tr').nextAll();
+
+            // Iterating across all the rows
+            // obtained to change the index
+            child.each(function () {
+
+                // Getting <tr> id.
+                var id = $(this).attr('id');
+
+                // Getting the <p> inside the .row-index class.
+                var idx = $(this).children('.row-index').children('p');
+
+                // Gets the row number from <tr> id.
+                var dig = parseInt(id.substring(1));
+
+                // Modifying row index.
+                idx.html(`Row ${dig - 1}`);
+
+                // Modifying row id.
+                $(this).attr('id', `R${dig - 1}`);
+            });
+
+            // Removing the current row.
+            $(this).closest('tr').remove();
+
+            // Decreasing total number of rows by 1.
+            rowIdx--;
+        });
+    });
+</script>
