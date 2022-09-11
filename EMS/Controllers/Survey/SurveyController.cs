@@ -15,10 +15,14 @@ namespace EMS.Controllers.Survey
     public class SurveyController : Controller
     {
         private readonly ISurveyService __ISurveyService;
-
-        public SurveyController(ISurveyService surveyService)
+        private readonly IGenericService<Questions, int> _IQuestionService;
+        private readonly IGenericService<Options, int> _IOptionsService;
+        public SurveyController(ISurveyService surveyService,
+            IGenericService<Questions, int> questionService, IGenericService<Options, int> optionService)
         {
             __ISurveyService = surveyService;
+            _IQuestionService = questionService;
+            _IOptionsService = optionService;
         }
 
         public async Task<IActionResult> Index(int id)
@@ -40,7 +44,7 @@ namespace EMS.Controllers.Survey
             {
                 var response = await __ISurveyService.CreateQuestionOptionsForSurvey(model, options);
 
-                return Json(ResponseHelper.ResponseMessage(response,OperationType.Create));
+                return Json(ResponseHelper.ResponseMessage(response, OperationType.Create));
             }
             else
             {
@@ -65,9 +69,47 @@ namespace EMS.Controllers.Survey
         public async Task<IActionResult> DeleteRecord(int id)
         {
             var deleteResponse = await __ISurveyService.DeleteQuestion(id);
-            return deleteResponse ? Json(ResponseHelper.ResponseMessage(true,OperationType.Delete)) : Json(false, OperationType.Delete);
+            return deleteResponse ? Json(ResponseHelper.ResponseMessage(true, OperationType.Delete)) : Json(false, OperationType.Delete);
 
 
         }
+
+        public async Task<IActionResult> CreateParentChildQuestion()
+        {
+            var questionDetails = await _IQuestionService.GetList(x => !x.IsDeleted);
+            ViewBag.QuestionList = questionDetails;
+            var optionsList = await _IOptionsService.GetList(x => !x.IsDeleted);
+            ViewBag.options = optionsList;
+            return View(ViewHelpers.GetViewName("Survey", "ParentChildQuestion"));
+
+        }
+
+
+        public async Task<IActionResult> CreateParentChildQuestionPost(int parentId, int optionId, int childQuestionid)
+        {
+            if (parentId > 0 || optionId > 0 || childQuestionid > 0)
+            {
+                var parentQuestion = await _IQuestionService.GetSingle(x => x.Id == parentId);
+                parentQuestion.ChildQuestionId = childQuestionid;
+                parentQuestion.OptionId = optionId;
+
+                var updateResponse = await _IQuestionService.UpdateEntity(parentQuestion);
+                return Json(ResponseHelper.ResponseMessage(updateResponse, OperationType.Create));
+            }
+            return Json("Please select Parent Question Child Question and Parent Option !");
+
+        }
+
+        public async Task<IActionResult> GetOptionList(int questionId)
+        {
+            var optionList = await _IOptionsService.GetList(x => x.QuestionId == questionId && !x.IsDeleted);
+            return Json(optionList);
+        }
+
+        //public async Task<IActionResult> GetParentChildQuestion()
+        //{
+
+
+        //}
     }
 }

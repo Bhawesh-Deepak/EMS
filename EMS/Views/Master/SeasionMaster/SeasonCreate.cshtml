@@ -1,0 +1,108 @@
+﻿@model EMS.Core.Entities.Master.SeasonModel
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:400px">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create Season Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="CreateSeasonPost" data-ajax-begin="AjaxCallBegin()" asp-controller="Seasion" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="CreatedBy" />
+                                    <input type="hidden" asp-for="CreatedDate" />
+                                    <label asp-for="SeasonName">Season Name</label>
+                                    <input asp-for="SeasonName" class="form-control">
+                                    <span asp-validation-for="SeasonName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="SeasonStartDate">Season Start Date</label>
+                                    <input type="date" asp-for="SeasonStartDate" class="form-control">
+                                    <span asp-validation-for="SeasonStartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="SeasonEndDateDate">Season End Date</label>
+                                    <input  asp-for="SeasonEndDateDate" type="date" class="form-control">
+                                    <span asp-validation-for="SeasonEndDateDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ManagerName">Manager Name</label>
+                                    <input asp-for="ManagerName" type="text" class="form-control">
+                                    <span asp-validation-for="ManagerName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ManagerMobileNumber">Manager Mobile#</label>
+                                    <input asp-for="ManagerMobileNumber" type="text" class="form-control">
+                                    <span asp-validation-for="ManagerMobileNumber" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ManagerEmail">Manager Email</label>
+                                    <input asp-for="ManagerEmail" type="email" class="form-control">
+                                    <span asp-validation-for="ManagerEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Sex">Sex</label>
+                                    <select asp-for="Sex" class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="Admin">Male</option>
+                                        <option value="SuperAdmin">Female</option>
+                                        <option value="User">UnKnown</option>
+                                    </select>
+                                    <span asp-validation-for="Sex" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>

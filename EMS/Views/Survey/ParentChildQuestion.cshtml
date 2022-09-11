@@ -1,0 +1,104 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
+<section class="content-header">
+    <h1>
+        Parent Child Question Mapping
+        <small>Parent Child Question Mapping</small>
+    </h1>
+</section>
+<section class="content" id="divParentChildMapping">
+    <div class="box" style="height:400px !important">
+        <div class="box-header with-border">
+            <h3 class="box-title">Questions / Options Details</h3>
+            <a class="btn btn-success pull-right" asp-action="GetQuestionDetails" asp-controller="Survey">
+                <i class="fa fa-list"> &nbsp; List</i>
+            </a>
+        </div>
+        <div class="box-body" style="height:400px !important">
+          
+                <div class="box-body" style="height:300px !important">
+
+                    <div class="col-md-12">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ParentQuestion">Parent Question</label>
+                                <select for="ParentQuestion" id="ddlParentQuestion" onchange="GetOptionList()" class="form-control">
+                                    <option value="">--Select--</option>
+                                    @foreach (var data in (IEnumerable<EMS.Core.Entities.Survey.Questions>)ViewBag.QuestionList)
+                                    {
+                                        <option value="@data.Id">@Html.Raw(data.Question)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ParentQuestion">Parent Option</label>
+                                <select for="ParentQuestion" id="ddlParentOption" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="childQuestion">Child Question</label>
+                                <select for="childQuestion" id="ddlChildQuestion" class="form-control">
+                                    <option value="">--Select--</option>
+                                    @foreach (var data in (IEnumerable<EMS.Core.Entities.Survey.Questions>)ViewBag.QuestionList)
+                                    {
+                                        <option value="@data.Id">@Html.Raw(data.Question)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" onclick="SaveParentChildQuestion()" type="button">
+                                <i class="fa fa-download"> &nbsp;Save</i>
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="reset" class="btn btn-danger pull-left">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("select").select2();
+    });
+
+    function GetOptionList() {
+        var questionId = $("#ddlParentQuestion").val();
+        $("#ddlParentOption").empty();
+        $.get("/Survey/GetOptionList", { questionId: questionId }, function (respData) {
+            debugger
+            for (var i = 0; i < respData.length; i++) {
+                $("#ddlParentOption").append("<option value=" + respData[i].id + ">" + respData[i].optionValue + "</option>")
+            }
+        });
+    }
+
+    function SaveParentChildQuestion() {
+        var parentQuestionId = $("#ddlParentQuestion").val();
+        var parentOptionId = $("#ddlParentOption").val();
+        var childQuestionid = $("#ddlChildQuestion").val();
+        $("#divParentChildMapping").addClass('loader');
+        $.get("/Survey/CreateParentChildQuestionPost", { parentId: parentQuestionId, optionId: parentOptionId, childQuestionid: childQuestionid}, function (resp) {
+            alertify.alert(resp, function () {
+                location.reload();
+            });
+            $("#divParentChildMapping").removeClass('loader');
+        })
+    }
+</script>

@@ -1,4 +1,5 @@
-﻿using EMS.Core.Entities.Survey;
+﻿using EMS.Core.Entities.Master;
+using EMS.Core.Entities.Survey;
 using EMS.Core.Entities.UserManagement;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,5 +24,6 @@ namespace EMS.Core.Entities.Common
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<Questions> Questions { get; set; }
         public virtual DbSet<Options> Options { get; set; }
+        public virtual DbSet<SeasonModel> SeasonModels { get; set; }
     }
 }
