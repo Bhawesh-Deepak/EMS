@@ -17,5 +17,8 @@ namespace EMS.Core.Entities.Survey
 
         [Required(ErrorMessage = "Question is required !")]
         public string Question { get; set; }
+
+        public int ChildQuestionId { get; set; }
+        public int OptionId { get; set; }
     }
 }
