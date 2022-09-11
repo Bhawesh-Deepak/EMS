@@ -1,0 +1,176 @@
+﻿@model IEnumerable<EMS.Core.ViewModelEntitity.Master.RegionMasterVm>
+<section class="content-header">
+    <h1>
+        Region Master List
+        <small>Region List</small>
+    </h1>
+</section>
+
+
+<section class="content" id="sectionUserList">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Region Master List</h3>
+            <div class="pull-right">
+                <button class="btn btn-success" onclick="AddRecord()">
+                    <i class="fa fa-plus">&nbsp;New Region</i>
+                </button>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="seasontbl" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Season Name</th>
+                        <th>Area Name</th>
+                        <th>Region Start Date</th>
+                        <th>Zone End Date</th>
+                        <th>Zone Start Date</th>
+                        <th>End Time Zone</th>
+                        <th>Area Description</th>
+                        <th>Area Capacity</th>
+                        <th>Area Manager Email</th>
+                        <th>Expected Attendee</th>
+                        <th>Space</th>
+                        <th>Target Group</th>
+                        <th>Area Manager Name</th>
+                        <th>District Manager Mobile</th>
+                        <th>Sex</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var data in Model)
+                    {
+                        <tr>
+                            <td>
+                                @data.SeasonName
+                            </td>
+                            <td>
+                                @data.AreaName
+                            </td>
+                            <td>
+                                @data.RegionStartDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @data.ZoneEndDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @data.ZoneStartDate.ToShortDateString()
+                            </td>
+                            <td>
+                                @data.EndTimeZone.ToShortDateString()
+                            </td>
+                            <td>
+                                @data.AreaDescription
+                            </td>
+                            <td>
+                                @data.AreaCapacity
+                            </td>
+                            <td>
+                                @data.AreaManagerEmail
+                            </td>
+                            <td>
+                                @data.ExpectedAttende
+                            </td>
+                            <td>
+                                @data.Space
+                            </td>
+                            <td>
+                                @data.TargetGroup
+                            </td>
+                            <td>
+                                @data.AreaManagerName
+                            </td>
+                            <td>
+                                @data.DistrictManagerMobile
+                            </td>
+                            <td>
+                                @data.Sex
+                            </td>
+                            <td>
+                                <a class="btn btn-primary" onclick="EditRecord(@data.Id)">
+                                    <i class="fa fa-edit"> </i>
+                                </a>
+                                <a class="btn btn-danger" onclick="DeleteRecord(@data.Id)">
+                                    <i class="fa fa-trash"> </i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/CommonModalPartial.cshtml")
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#seasontbl").DataTable({
+            scrollX: true,
+
+            responsive: {
+                details: {
+                    type: 'column',
+                    target: 'tr'
+                }
+            },
+            columnDefs: [{
+                className: 'control',
+                orderable: false,
+                targets: 0
+            }],
+            order: [1, 'asc']
+        })
+    });
+
+    function AddRecord() {
+        $("#sectionUserList").addClass('loading');
+        $.get("/RegionMaster/CreateRegionMaster", function (respData) {
+            $("#divModalData").html(respData);
+            $("#emsModal").modal('show');
+            $("#emsTitle").text("Create Region Master");
+            $("#sectionUserList").removeClass('loading');
+        })
+
+    }
+
+    function EditRecord(id) {
+
+        $("#sectionUserList").addClass('loading');
+        $.get("/Seasion/CreateSeason", { id: id }, function (respData) {
+            $("#divModalData").html(respData);
+            $("#emsModal").modal('show');
+            $("#emsTitle").text("Create Region Master");
+            $("#sectionUserList").removeClass('loading');
+        })
+    }
+    function Success(resp) {
+        $("#sectionUserCreate").removeClass('loading');
+        alertify.success(resp);
+        setTimeout(function () {
+            location.reload();
+        }, 300)
+    }
+
+    function AjaxCallBegin() {
+        $("#sectionUserCreate").addClass('loading');
+    }
+
+    function DeleteRecord(id) {
+        $("#sectionUserList").addClass('loading');
+        alertify.confirm("Are you sure want to Delete record ?", function () {
+            $.get("/Seasion/DeleteSeason", { id: id }, function (response) {
+                alertify.success(response);
+                $("#sectionUserList").removeClass('loading');
+                setTimeout(function () {
+                    location.reload();
+                }, 500)
+            });
+        }, function () {
+            $("#sectionUserList").removeClass('loading');
+            alertify.error('You have cancel the event .')
+        });
+    }
+</script>

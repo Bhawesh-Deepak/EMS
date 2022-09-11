@@ -1,0 +1,174 @@
+﻿@model EMS.Core.Entities.Master.RegionMaster
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:500px">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create Region Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="CreateRegionMasterPost" data-ajax-begin="AjaxCallBegin()"
+                      asp-controller="RegionMaster" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="CreatedBy" />
+                                    <input type="hidden" asp-for="CreatedDate" />
+                                    <label asp-for="SeasonId">Season Name</label>
+                                    <input asp-for="SeasonId" class="form-control">
+                                    <span asp-validation-for="SeasonId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AreaName">Area Name</label>
+                                    <input type="date" asp-for="AreaName" class="form-control">
+                                    <span asp-validation-for="AreaName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="RegionStartDate">Region Start Date</label>
+                                    <input asp-for="RegionStartDate" type="date" class="form-control">
+                                    <span asp-validation-for="RegionStartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ZoneEndDate">Zone End Date</label>
+                                    <input asp-for="ZoneEndDate" type="date" class="form-control">
+                                    <span asp-validation-for="ZoneEndDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ZoneStartDate">Zone Start Date</label>
+                                    <input asp-for="ZoneStartDate" type="date" class="form-control">
+                                    <span asp-validation-for="ZoneStartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EndTimeZone">End Time Zone</label>
+                                    <input asp-for="EndTimeZone" type="date" class="form-control">
+                                    <span asp-validation-for="EndTimeZone" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AreaDescription">Area Description</label>
+                                    <input asp-for="AreaDescription" type="text" class="form-control">
+                                    <span asp-validation-for="AreaDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AreaCapacity">Area Capacity</label>
+                                    <input asp-for="AreaCapacity" type="text" class="form-control">
+                                    <span asp-validation-for="AreaCapacity" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AreaManagerEmail">Area Manager Email</label>
+                                    <input asp-for="AreaManagerEmail" type="text" class="form-control">
+                                    <span asp-validation-for="AreaManagerEmail" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ExpectedAttende">Expected Attende</label>
+                                    <input asp-for="ExpectedAttende" type="text" class="form-control">
+                                    <span asp-validation-for="ExpectedAttende" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Space">Space</label>
+                                    <input asp-for="Space" type="text" class="form-control">
+                                    <span asp-validation-for="Space" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="TargetGroup">Target Group</label>
+                                    <input asp-for="TargetGroup" type="text" class="form-control">
+                                    <span asp-validation-for="TargetGroup" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AreaManagerName">Area Manage Name</label>
+                                    <input asp-for="AreaManagerName" type="text" class="form-control">
+                                    <span asp-validation-for="AreaManagerName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="DistrictManagerMobile">District Manager Mobile</label>
+                                    <input asp-for="DistrictManagerMobile" type="text" class="form-control">
+                                    <span asp-validation-for="DistrictManagerMobile" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="Sex">Sex</label>
+                                    <select asp-for="Sex" class="form-control">
+                                        <option value="">--Select--</option>
+                                        <option value="Admin">Male</option>
+                                        <option value="SuperAdmin">Female</option>
+                                        <option value="User">UnKnown</option>
+                                    </select>
+                                    <span asp-validation-for="Sex" class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>

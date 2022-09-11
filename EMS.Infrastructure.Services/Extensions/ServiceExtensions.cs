@@ -1,6 +1,8 @@
 ﻿using EMS.Core.Services.GenericService;
+using EMS.Core.Services.Master;
 using EMS.Core.Services.Survey;
 using EMS.Infrastructure.Services.Implementation;
+using EMS.Infrastructure.Services.MasterImplementation;
 using EMS.Infrastructure.Services.SurveyImplementation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -19,6 +21,7 @@ namespace EMS.Infrastructure.Services.Extensions
                 typeof(GenericServiceImplementation<,>));
 
             serviceCollection.AddTransient<ISurveyService, SurveyService>();
+            serviceCollection.AddTransient<IMasterService, MasterService>();
         }
     }
 }
