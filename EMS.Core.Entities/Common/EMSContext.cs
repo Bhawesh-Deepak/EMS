@@ -26,5 +26,6 @@ namespace EMS.Core.Entities.Common
         public virtual DbSet<Options> Options { get; set; }
         public virtual DbSet<SeasonModel> SeasonModels { get; set; }
         public virtual DbSet<RegionMaster> RegionMasters { get; set; }
+        public virtual DbSet<EventMaster> EventMasters { get; set; }
     }
 }

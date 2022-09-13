@@ -1,0 +1,122 @@
+﻿@model EMS.Core.Entities.Survey.EventMaster
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:500px">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create Event Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="CreateRegionMasterPost" data-ajax-begin="AjaxCallBegin()"
+                      asp-controller="RegionMaster" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="CreatedBy" />
+                                    <input type="hidden" asp-for="CreatedDate" />
+                                    <label asp-for="CompanyName">Company Name</label>
+                                    <input asp-for="CompanyName" class="form-control">
+                                    <span asp-validation-for="CompanyName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="AreaId">Area Name</label>
+                                    <select type="date" asp-for="AreaId" class="form-control">
+                                        <option value="">--Select--</option>
+                                        @foreach (var data in (IEnumerable<EMS.Core.Entities.Master.RegionMaster>)ViewBag.RegionList)
+                                        {
+                                            <option value="@data.Id">@Html.Raw(data.AreaName)</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="AreaId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="SeasonId">Season Name</label>
+                                    <select asp-for="SeasonId" type="date" class="form-control">
+                                        <option value="">--Select--</option>
+                                        @foreach (var data in (IEnumerable<EMS.Core.Entities.Master.SeasonModel>)ViewBag.SeasonList)
+                                        {
+                                            <option value="@data.Id">@Html.Raw(data.SeasonName)</option>
+                                        }
+                                    </select>
+                                    <span asp-validation-for="SeasonId" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EventStartDate">Event Start Date</label>
+                                    <input asp-for="EventStartDate" type="date" class="form-control">
+                                    <span asp-validation-for="EventStartDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EventEndDate">Event End Date</label>
+                                    <input asp-for="EventEndDate" type="date" class="form-control">
+                                    <span asp-validation-for="EventEndDate" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="EventName">Event Name</label>
+                                    <input asp-for="EventName" type="text" class="form-control">
+                                    <span asp-validation-for="EventName" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="TargetAudience">Target Audience</label>
+                                    <input asp-for="TargetAudience" type="text" class="form-control">
+                                    <span asp-validation-for="TargetAudience" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="DailyCapacity">Daily Capacity</label>
+                                    <input asp-for="DailyCapacity" type="number" class="form-control">
+                                    <span asp-validation-for="DailyCapacity" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>
