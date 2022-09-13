@@ -26,8 +26,34 @@ namespace EMS.Controllers.Survey
         public async Task<IActionResult> CreateEvent(int id)
         {
             await PopulateViewBag();
-            var responseModel = await _IEventMasterService.GetList(x => !x.IsDeleted);
-            return View(ViewHelpers.GetViewName("Event", "EventCreate"));
+            var responseModel = await _IEventMasterService.GetSingle(x => x.Id == id);
+            return View(ViewHelpers.GetViewName("Event", "EventCreate"), responseModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEventPost(EventMaster model)
+        {
+            if (model.Id == 0)
+            {
+                model.IsActive = true;
+                model.IsDeleted = false;
+                var response = await _IEventMasterService.CreateEntity(model);
+                var eventId = await _IEventMasterService.GetList(x => !x.IsDeleted);
+                return RedirectToAction("EventQuestion", new { id = eventId });
+            }
+            else
+            {
+                model.IsActive = true;
+                model.IsDeleted = false;
+                var response = await _IEventMasterService.UpdateEntity(model);
+                var eventId = await _IEventMasterService.GetList(x => !x.IsDeleted);
+                return RedirectToAction("EventQuestion", new { id = model.Id });
+            }
+        }
+
+        public async Task<IActionResult> EventQuestion(int id)
+        {
+            return await Task.Run(() => View(ViewHelpers.GetViewName("Event", "EventQuestion")));
         }
 
         #region PopulateViewBag
