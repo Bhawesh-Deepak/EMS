@@ -29,5 +29,7 @@ namespace EMS.Core.Entities.Common
         public virtual DbSet<RegionMaster> RegionMasters { get; set; }
         public virtual DbSet<EventMaster> EventMasters { get; set; }
         public virtual DbSet<RoleMaster> RoleMasters { get; set; }
+        public virtual DbSet<ModuleMaster> ModuleMasters { get; set; }
+        public virtual DbSet<RoleAccess> RoleAccesses { get; set; }
     }
 }
