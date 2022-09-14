@@ -1,4 +1,5 @@
-﻿using EMS.Models;
+﻿using EMS.Helpers;
+using EMS.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,6 +27,11 @@ namespace EMS.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult NotFound()
+        {
+            return View(ViewHelpers.GetViewName("Shared", "NotFound"));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

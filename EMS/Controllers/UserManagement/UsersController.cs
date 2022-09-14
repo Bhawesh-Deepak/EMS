@@ -36,12 +36,12 @@ namespace EMS.Controllers.UserManagement
             if (model.Id == 0)
             {
                 var response = await _IUserService.CreateEntity(model);
-                return Json(response, OperationType.Create);
+                return Json(ResponseHelper.ResponseMessage(response,OperationType.Create));
             }
             else
             {
                 var response = await _IUserService.UpdateEntity(model);
-                return  Json(response, OperationType.Update);
+                return Json(ResponseHelper.ResponseMessage(response, OperationType.Update));
             }
         }
 
@@ -52,7 +52,7 @@ namespace EMS.Controllers.UserManagement
             {
                 response.IsDeleted = true;
                 var deleteResponse = await _IUserService.UpdateEntity(response);
-                return Json(deleteResponse,OperationType.Delete);
+                return Json(ResponseHelper.ResponseMessage(deleteResponse, OperationType.Delete));
             }
 
             return Json("Record do not found !");

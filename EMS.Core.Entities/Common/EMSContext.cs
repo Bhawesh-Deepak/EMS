@@ -1,6 +1,7 @@
 ﻿using EMS.Core.Entities.Master;
 using EMS.Core.Entities.Survey;
 using EMS.Core.Entities.UserManagement;
+using EMS.Core.Entities.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,5 +28,6 @@ namespace EMS.Core.Entities.Common
         public virtual DbSet<SeasonModel> SeasonModels { get; set; }
         public virtual DbSet<RegionMaster> RegionMasters { get; set; }
         public virtual DbSet<EventMaster> EventMasters { get; set; }
+        public virtual DbSet<RoleMaster> RoleMasters { get; set; }
     }
 }
