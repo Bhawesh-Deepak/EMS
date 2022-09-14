@@ -1,0 +1,62 @@
+﻿@model EMS.Core.Entities.Utilities.RoleMaster
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:400px">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Create Role Details</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="CreateRolePost" data-ajax-begin="AjaxCallBegin()" asp-controller="RoleMaster" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="CreatedBy" />
+                                    <input type="hidden" asp-for="CreatedDate" />
+                                    <label asp-for="RoleName">Role Name</label>
+                                    <input asp-for="RoleName" class="form-control">
+                                    <span asp-validation-for="RoleName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="RoleDescription">Role Description</label>
+                                    <input asp-for="RoleDescription" class="form-control">
+                                    <span asp-validation-for="RoleDescription" class="text-danger"></span>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>
