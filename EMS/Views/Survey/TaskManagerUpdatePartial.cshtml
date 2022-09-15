@@ -1,0 +1,64 @@
+﻿@model EMS.Core.ViewModelEntitity.Survey.UpdateTaskVm
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:400px">
+                <div class="box-header with-border">
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="PostUpdateTaskStatus" data-ajax-begin="AjaxCallBegin()" asp-controller="TaskMaster" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="TaskId"/>
+                                    <label>Task Status</label>
+                                    <select asp-for="StatusId" class="form-control" id="ddlTaskStatus">
+                                        <option value="">--Select--</option>
+                                        <option value="Open">Open</option>
+                                        <option value="Progress">On Going</option>
+                                        <option value="Done">Done</option>
+                                        <option value="Cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label >Comments</label>
+                                    <textarea asp-for="Comment" class="form-control"></textarea>
+                                   
+                                </div>
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>

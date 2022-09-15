@@ -1,0 +1,98 @@
+﻿
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                  asp-action="CreateRoleAccess" data-ajax-begin="AjaxCallBegin()" asp-controller="RoleAccess" data-ajax-success="Success">
+                <div class="box box-primary" style="height:600px">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Role Access </h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+
+                    <div class="divRoleAccess">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+
+                                    <label>Role Name</label>
+                                    <select class="form-control" id="ddlRole" onchange="RoleChange()">
+                                        <option value="">--Select--</option>
+                                        @foreach (var data in (IEnumerable<EMS.Core.Entities.Utilities.RoleMaster>)ViewBag.RoleList)
+                                        {
+                                            <option value="@data.Id">@data.RoleName</option>
+                                        }
+                                    </select>
+                                    <span class="text-danger"></span>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="col-md-12">
+                            <div id="divData">
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer" id="divFooter" style="display:none">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+
+                </div>
+                </form>
+        </div>
+
+
+    </div>
+</section>
+
+<script>
+    function RoleChange() {
+      
+        if ($("#ddlRole").val() != '') {
+            $("#divData").html('');
+            $("#divRoleAccess").addClass('loader');
+            $.get("/RoleAccess/RoleAccessDetails", { roleId: $("#ddlRole").val() }, function (data) {
+                $("#divData").html('').html(data);
+                $("#divRoleAccess").removeClass('loader');
+                $("#divFooter").removeAttr('style');
+            });
+        } else {
+            $("#divFooter").attr('style', 'display:none');
+            $("#divData").html('');
+        }
+
+    }
+
+    function Success(resp) {
+        $("#sectionUserCreate").removeClass('loading');
+        alertify.success(resp);
+        setTimeout(function () {
+            location.reload();
+        }, 300)
+    }
+
+    function AjaxCallBegin() {
+        $("#sectionUserCreate").addClass('loading');
+    }
+</script>
