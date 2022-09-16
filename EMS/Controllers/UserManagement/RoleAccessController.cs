@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers.UserManagement
 {
+    [AuthenticateService]
     public class RoleAccessController : Controller
     {
         private readonly IGenericService<RoleMaster, int> _IRoleMasterService;

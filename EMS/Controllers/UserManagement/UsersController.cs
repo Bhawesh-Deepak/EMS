@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers.UserManagement
 {
+    [AuthenticateService]
     public class UsersController : Controller
     {
         private readonly IGenericService<Users, int> _IUserService;

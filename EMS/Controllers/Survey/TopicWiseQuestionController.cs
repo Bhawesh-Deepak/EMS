@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers.Survey
 {
+    [AuthenticateService]
     public class TopicWiseQuestionController : Controller
     {
         private readonly IDapperService<TopicQuestionParams> _ITopicQuestionService;

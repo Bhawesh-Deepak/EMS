@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers.Survey
 {
+    [AuthenticateService]
     public class TaskMasterController : Controller
     {
         private readonly IGenericService<TaskMaster, int> _ITaskMasterService;

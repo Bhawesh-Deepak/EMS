@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.Controllers.Master
 {
+    [AuthenticateService]
     public class SeasionController : Controller
     {
         private readonly IGenericService<SeasonModel, int> _ISessionService;

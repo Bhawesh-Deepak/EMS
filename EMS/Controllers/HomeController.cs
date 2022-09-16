@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers
 {
+    [AuthenticateService]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers.Utilities
 {
+    [AuthenticateService]
     public class UtilitiesController : Controller
     {
         public async Task<IActionResult> Index()
