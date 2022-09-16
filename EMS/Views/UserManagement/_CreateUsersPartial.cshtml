@@ -56,9 +56,10 @@
                                     <label asp-for="RoleName">Role</label>
                                     <select asp-for="RoleName" class="form-control">
                                         <option value="">--Select--</option>
-                                        <option value="Admin">Admin</option>
-                                        <option value="SuperAdmin">Super Admin</option>
-                                        <option value="User">User</option>
+                                        @foreach (var data in (IEnumerable<EMS.Core.Entities.Utilities.RoleMaster>) ViewBag.RoleList)
+                                        { 
+                                            <option value="@data.RoleName">@data.RoleName</option>
+                                        }
                                     </select>
                                     <span asp-validation-for="RoleName" class="text-danger"></span>
                                 </div>

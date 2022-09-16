@@ -22,6 +22,7 @@ namespace EMS.Infrastructure.Services.Extensions
 
             serviceCollection.AddTransient<ISurveyService, SurveyService>();
             serviceCollection.AddTransient<IMasterService, MasterService>();
+            serviceCollection.AddTransient(typeof(IDapperService<>), typeof(DapperServiceImplementation<>));
         }
     }
 }

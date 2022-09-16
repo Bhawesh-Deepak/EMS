@@ -11,7 +11,7 @@ namespace EMS.Core.Entities.UserManagement
     [Table("RoleAccess", Schema = "UserManagement")]
     public class RoleAccess: Base<int>
     {
-        public int RoleId { get; set; }
+        public string Role { get; set; }
         public int ModuleId { get; set; }
     }
 }

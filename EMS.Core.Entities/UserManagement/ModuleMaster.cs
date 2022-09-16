@@ -19,6 +19,6 @@ namespace EMS.Core.Entities.UserManagement
         [NotMapped]
         public bool  IsMapped { get; set; }
         [NotMapped]
-        public int RoleId { get; set; }
+        public string  Role { get; set; }
     }
 }

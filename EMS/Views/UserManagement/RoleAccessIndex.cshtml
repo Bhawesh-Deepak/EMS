@@ -21,11 +21,11 @@
                                 <div class="form-group">
 
                                     <label>Role Name</label>
-                                    <select class="form-control" id="ddlRole" onchange="RoleChange()">
+                                    <select name="role" class="form-control" id="ddlRole" onchange="RoleChange()">
                                         <option value="">--Select--</option>
                                         @foreach (var data in (IEnumerable<EMS.Core.Entities.Utilities.RoleMaster>)ViewBag.RoleList)
                                         {
-                                            <option value="@data.Id">@data.RoleName</option>
+                                            <option value="@data.RoleName">@data.RoleName</option>
                                         }
                                     </select>
                                     <span class="text-danger"></span>
@@ -72,7 +72,7 @@
         if ($("#ddlRole").val() != '') {
             $("#divData").html('');
             $("#divRoleAccess").addClass('loader');
-            $.get("/RoleAccess/RoleAccessDetails", { roleId: $("#ddlRole").val() }, function (data) {
+            $.get("/RoleAccess/RoleAccessDetails", { role: $("#ddlRole").val() }, function (data) {
                 $("#divData").html('').html(data);
                 $("#divRoleAccess").removeClass('loader');
                 $("#divFooter").removeAttr('style');

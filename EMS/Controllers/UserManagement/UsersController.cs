@@ -1,5 +1,6 @@
 ﻿using EMS.Core.Entities.Common;
 using EMS.Core.Entities.UserManagement;
+using EMS.Core.Entities.Utilities;
 using EMS.Core.Services.GenericService;
 using EMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,12 @@ namespace EMS.Controllers.UserManagement
     public class UsersController : Controller
     {
         private readonly IGenericService<Users, int> _IUserService;
+        private readonly IGenericService<RoleMaster, int> _IRoleMasterService;
 
-        public UsersController(IGenericService<Users, int> userService)
+        public UsersController(IGenericService<Users, int> userService, IGenericService<RoleMaster, int>  roleService)
         {
             _IUserService = userService;
+            _IRoleMasterService = roleService;
         }
         public async Task<IActionResult> Index()
         {
@@ -26,6 +29,7 @@ namespace EMS.Controllers.UserManagement
 
         public async Task<IActionResult> CreateUser(int id)
         {
+            ViewBag.RoleList = await _IRoleMasterService.GetList(x => x.IsActive && !x.IsDeleted);
             var userDetail = await _IUserService.GetSingle(x => x.Id == id);
             return PartialView(ViewHelpers.GetViewName("UserManagement", "_CreateUsersPartial"), userDetail);
         }

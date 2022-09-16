@@ -14,6 +14,7 @@ namespace EMS.Infrastructure.Repository.Extensions
         public static void RepositoryExtension(this IServiceCollection serviceCollection)
         {
             serviceCollection.AddTransient(typeof(IGenericRepository<,>), typeof(GenericImplementation<,>));
+            serviceCollection.AddTransient(typeof(IDapperRepository<>), typeof(DapperImplementation<>));
         }
     }
 }

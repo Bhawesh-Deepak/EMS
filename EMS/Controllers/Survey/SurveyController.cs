@@ -85,13 +85,15 @@ namespace EMS.Controllers.Survey
         }
 
 
-        public async Task<IActionResult> CreateParentChildQuestionPost(int parentId, int optionId, int childQuestionid)
+        public async Task<IActionResult> CreateParentChildQuestionPost(int parentId, int optionId, int childQuestionid, int childQuestion1Id, int parentOptionId1)
         {
             if (parentId > 0 || optionId > 0 || childQuestionid > 0)
             {
                 var parentQuestion = await _IQuestionService.GetSingle(x => x.Id == parentId);
                 parentQuestion.ChildQuestionId = childQuestionid;
                 parentQuestion.OptionId = optionId;
+                parentQuestion.ChildQuestionId1 = childQuestion1Id;
+                parentQuestion.ChildOptionId1 = parentOptionId1;
 
                 var updateResponse = await _IQuestionService.UpdateEntity(parentQuestion);
                 return Json(ResponseHelper.ResponseMessage(updateResponse, OperationType.Create));

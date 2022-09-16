@@ -29,13 +29,13 @@ namespace EMS.Controllers.UserManagement
             return View(ViewHelpers.GetViewName("UserManagement", "RoleAccessIndex"));
         }
 
-        public async Task<IActionResult> RoleAccessDetails(int roleId)
+        public async Task<IActionResult> RoleAccessDetails(string role)
         {
             var moduleMaster = await _IModuleMasterService.GetList(x => !x.IsDeleted);
-            var roleAccess = await _IRoleAccessService.GetList(x => !x.IsDeleted && x.RoleId == roleId);
+            var roleAccess = await _IRoleAccessService.GetList(x => !x.IsDeleted && x.Role == role);
             moduleMaster.ToList().ForEach(data =>
             {
-                data.RoleId = roleId;
+                data.Role = role;
                 if (roleAccess.Any())
                 {
                     roleAccess.ToList().ForEach(item =>
@@ -54,9 +54,9 @@ namespace EMS.Controllers.UserManagement
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateRoleAccess(string[] moduleId, int roleId)
+        public async Task<IActionResult> CreateRoleAccess(string[] moduleId, string role)
         {
-            var roleAccessList = await _IRoleAccessService.GetList(x => !x.IsDeleted && x.RoleId == roleId);
+            var roleAccessList = await _IRoleAccessService.GetList(x => !x.IsDeleted && x.Role == role);
             roleAccessList.ToList().ForEach(data =>
             {
                 data.IsDeleted = true;
@@ -69,7 +69,7 @@ namespace EMS.Controllers.UserManagement
                 roleAccess.Add(new RoleAccess()
                 {
                     ModuleId = Convert.ToInt32(data),
-                    RoleId = roleId,
+                    Role = role,
                     IsActive = true,
                     IsDeleted = false,
                     CreatedBy = 1,

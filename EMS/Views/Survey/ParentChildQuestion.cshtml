@@ -37,7 +37,7 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="ParentQuestion">Parent Option</label>
+                                <label for="ParentQuestion">Parent Option1</label>
                                 <select for="ParentQuestion" id="ddlParentOption" class="form-control">
                                 </select>
                             </div>
@@ -45,8 +45,29 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="childQuestion">Child Question</label>
+                                <label for="childQuestion">Child Question1</label>
                                 <select for="childQuestion" id="ddlChildQuestion" class="form-control">
+                                    <option value="">--Select--</option>
+                                    @foreach (var data in (IEnumerable<EMS.Core.Entities.Survey.Questions>)ViewBag.QuestionList)
+                                    {
+                                        <option value="@data.Id">@Html.Raw(data.Question)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="ParentQuestion">Parent Option2</label>
+                                <select for="ParentQuestion" id="ddlParentOption2" class="form-control">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="childQuestion">Child Question1</label>
+                                <select for="childQuestion" id="ddlChildQuestion1" class="form-control">
                                     <option value="">--Select--</option>
                                     @foreach (var data in (IEnumerable<EMS.Core.Entities.Survey.Questions>)ViewBag.QuestionList)
                                     {
@@ -81,10 +102,12 @@
     function GetOptionList() {
         var questionId = $("#ddlParentQuestion").val();
         $("#ddlParentOption").empty();
+        $("#ddlParentOption2").empty();
         $.get("/Survey/GetOptionList", { questionId: questionId }, function (respData) {
             debugger
             for (var i = 0; i < respData.length; i++) {
                 $("#ddlParentOption").append("<option value=" + respData[i].id + ">" + respData[i].optionValue + "</option>")
+                $("#ddlParentOption2").append("<option value=" + respData[i].id + ">" + respData[i].optionValue + "</option>")
             }
         });
     }
@@ -93,8 +116,17 @@
         var parentQuestionId = $("#ddlParentQuestion").val();
         var parentOptionId = $("#ddlParentOption").val();
         var childQuestionid = $("#ddlChildQuestion").val();
+        var parentOptionId1 = $("#ddlParentOption2").val();
+        var childQuestionid1 = $("#ddlChildQuestion1").val();
+
         $("#divParentChildMapping").addClass('loader');
-        $.get("/Survey/CreateParentChildQuestionPost", { parentId: parentQuestionId, optionId: parentOptionId, childQuestionid: childQuestionid}, function (resp) {
+        $.get("/Survey/CreateParentChildQuestionPost", {
+            parentId: parentQuestionId,
+            optionId: parentOptionId,
+            childQuestionid: childQuestionid,
+            childQuestion1Id: childQuestionid1,
+            parentOptionId1: parentOptionId1
+        }, function (resp) {
             alertify.alert(resp, function () {
                 location.reload();
             });

@@ -20,5 +20,7 @@ namespace EMS.Core.Entities.Survey
 
         public int ChildQuestionId { get; set; }
         public int OptionId { get; set; }
+        public int ChildQuestionId1 { get; set; }
+        public int ChildOptionId1 { get; set; }
     }
 }

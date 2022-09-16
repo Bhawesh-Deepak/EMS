@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using EMS.Core.Repository.GenericRepository;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,17 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EMS.Infrastructure.Services.Implementation
+namespace EMS.Infrastructure.Repository.Implementation
 {
     public class DapperImplementation<TParams> : IDapperRepository<TParams>
     {
-        private readonly IConfiguration _config;
+      
         private readonly string _connectionString;
 
-        public DapperImplementation(IConfiguration config)
+        public DapperImplementation()
         {
-            _config = config;
-            _connectionString = _config.GetSection("ConnectionStrings:DefaultConnection").Value;
+          
+            _connectionString = "server=89.163.218.70\\MSSQLSERVER2017; Database= BIS_Store1; User Id=igl;Password = Manoj@12345";
         }
         public void Dispose()
         {
@@ -39,7 +38,7 @@ namespace EMS.Infrastructure.Services.Implementation
                     db.Open();
 
                 var parms = ConvertObjectToDBParameter<TParams>(entity);
-                result = db.Query<TModel>(sp, parms, commandType: CommandType.Text, transaction: null).FirstOrDefault();
+                result = db.Query<TModel>(sp, parms, commandType: CommandType.StoredProcedure, transaction: null).FirstOrDefault();
 
                 return result;
             }
@@ -58,7 +57,7 @@ namespace EMS.Infrastructure.Services.Implementation
             }
 
             using IDbConnection db = new SqlConnection(_connectionString);
-            return db.Query<TModel>(sp, parms, commandType: CommandType.Text).FirstOrDefault();
+            return db.Query<TModel>(sp, parms, commandType: CommandType.StoredProcedure).FirstOrDefault();
         }
 
         public IEnumerable<TModel> GetAll<TModel>(string sp, TParams entity)
@@ -71,7 +70,7 @@ namespace EMS.Infrastructure.Services.Implementation
                     parms = ConvertObjectToDBParameter<TParams>(entity);
                 }
                 using IDbConnection db = new SqlConnection(_connectionString);
-                return db.Query<TModel>(sp, parms, commandType: CommandType.Text).ToList();
+                return db.Query<TModel>(sp, parms, commandType: CommandType.StoredProcedure).ToList();
             }
             catch (Exception ex)
             {
@@ -81,7 +80,7 @@ namespace EMS.Infrastructure.Services.Implementation
 
         public DbConnection GetDbconnection()
         {
-            return new SqlConnection(_config.GetSection("ConnectionStrings:DefaultConnection").Value);
+            return new SqlConnection(_connectionString);
         }
 
         public DynamicParameters ConvertObjectToDBParameter<T>(T entity)
@@ -113,5 +112,6 @@ namespace EMS.Infrastructure.Services.Implementation
 
             return sqlParamter.DbType;
         }
+
     }
 }

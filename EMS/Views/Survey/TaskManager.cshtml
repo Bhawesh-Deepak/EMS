@@ -103,7 +103,9 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $("#questionTable").DataTable({})
+        $("#questionTable").DataTable({
+            scrollX: true
+        })
     });
 
     function EditTaskManager(id, taskName, taskStatus) {

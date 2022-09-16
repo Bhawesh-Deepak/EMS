@@ -1,0 +1,47 @@
+﻿@model IEnumerable<EMS.Core.ViewModelEntitity.Survey.TopicWiseQuestionVm>
+
+<style>
+    ul {
+        list-style-type: none;
+    }
+
+</style>
+<section class="content-header">
+    <h1>
+        @Model?.First()?.TopicName
+        <small>Question List</small>
+    </h1>
+</section>
+
+
+<section class="content" id="sectionUserList">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">@Model?.First()?.TopicName Quesiton List</h3>
+            <div class="pull-right">
+
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    @foreach (var data in Model.GroupBy(x => x.Question))
+                    {
+                        <h5 style="font-weight:bold">@Html.Raw(data.Key)</h5>
+                        <ul>
+                            @foreach (var item in data)
+                            {
+                                <li>
+                                    <input type="radio" name="@data.Key" /> <b> @item.OptionValue</b>
+                                </li>
+                            }
+                        </ul>
+
+                    }
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</section>
