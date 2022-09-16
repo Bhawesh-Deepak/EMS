@@ -93,7 +93,7 @@ namespace EMS.Controllers.Survey
                 parentQuestion.ChildQuestionId = childQuestionid;
                 parentQuestion.OptionId = optionId;
                 parentQuestion.ChildQuestionId1 = childQuestion1Id;
-                parentQuestion.ChildOptionId1 = parentOptionId1;
+                parentQuestion.ChildOptionId1 =childQuestion1Id==0?0: parentOptionId1;
 
                 var updateResponse = await _IQuestionService.UpdateEntity(parentQuestion);
                 return Json(ResponseHelper.ResponseMessage(updateResponse, OperationType.Create));

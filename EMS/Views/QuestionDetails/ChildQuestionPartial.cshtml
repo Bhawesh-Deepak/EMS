@@ -1,0 +1,26 @@
+﻿@model IEnumerable<EMS.Core.ViewModelEntitity.Survey.TopicWiseQuestionVm>
+
+@if (Model != null)
+{
+    foreach (var data in Model.GroupBy(x => x.Question))
+    {
+        <div class="card">
+            <div class="card-header">
+                <h5 style="font-weight:bold">@Html.Raw(data.Key)</h5>
+            </div>
+            <div class="card-body">
+                <ul>
+                    @foreach (var item in data)
+                    {
+                        <li>
+                            <input onchange="GetChildQuestion(@item.QuestionId, @item.OptionId)" type="radio" name="@data.Key" /> <b> @item.OptionValue</b>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+
+    }
+}
+
