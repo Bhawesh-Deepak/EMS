@@ -18,8 +18,10 @@ namespace EMS.Core.Entities.Survey
 
         public string AgencyName { get; set; }
         public string ContactReason { get; set; }
+        public string Priority { get; set; }
 
         public string TaskStatus { get; set; }
         public string Comment { get; set; }
+
     }
 }

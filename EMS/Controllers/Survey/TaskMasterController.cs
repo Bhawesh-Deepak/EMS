@@ -20,7 +20,7 @@ namespace EMS.Controllers.Survey
         }
         public async Task<IActionResult> Index()
         {
-            var response = await _ITaskMasterService.GetList(x => !x.IsDeleted);
+            var response = await _ITaskMasterService.GetList(x => !x.IsDeleted && (x.TaskStatus.ToLower()=="open" || x.TaskStatus.ToLower() == "on going"));
             return View(ViewHelpers.GetViewName("Survey", "TaskManager"), response);
         }
 

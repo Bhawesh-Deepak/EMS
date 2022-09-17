@@ -62,6 +62,12 @@ namespace EMS.Controllers.Master
             ViewBag.SeasionList = await _ISeasonService.GetList(x => !x.IsDeleted);
         }
 
+        public async Task<IActionResult> RegionListBySessionId(int SessionId)
+        {
+            var responseModel = await _IMasterService.GetRegionMasterList();
+            return Json(responseModel.Where(x=>x.SessionId==SessionId));
+        }
+
         #endregion
     }
 }

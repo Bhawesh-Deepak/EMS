@@ -33,6 +33,7 @@ namespace EMS.Infrastructure.Services.MasterImplementation
                                   select new RegionMasterVm
                                   {
                                       Id = rm.Id,
+                                      SessionId = sm.Id,
                                       SeasonName = sm.SeasonName,
                                       AreaName = rm.AreaName,
                                       RegionStartDate = rm.RegionStartDate,
