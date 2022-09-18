@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.Controllers.Master
 {
+    [AuthenticateService]
     public class RegionMasterController : Controller
     {
         private readonly IGenericService<RegionMaster, int> _IRegionMasterService;

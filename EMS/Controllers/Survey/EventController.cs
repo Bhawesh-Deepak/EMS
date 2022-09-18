@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EMS.Controllers.Survey
 {
+    [AuthenticateService]
     public class EventController : Controller
     {
         private readonly IGenericService<SeasonModel, int> _ISeasonService;

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace EMS.Controllers.Survey
 {
+    [AuthenticateService]
     public class SurveyController : Controller
     {
         private readonly ISurveyService __ISurveyService;
