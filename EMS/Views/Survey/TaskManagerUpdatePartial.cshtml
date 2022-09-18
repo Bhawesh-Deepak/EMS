@@ -18,7 +18,15 @@
                         <div class="col-md-12">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <input type="hidden" asp-for="TaskId"/>
+                                    <input type="hidden" asp-for="TaskId" />
+                                    <label>Task Name </label>
+                                    <input disabled type="text" asp-for="TaskName" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
                                     <label>Task Status</label>
                                     <select asp-for="StatusId" class="form-control" id="ddlTaskStatus">
                                         <option value="">--Select--</option>
@@ -31,14 +39,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label >Comments</label>
+                                    <label>Comments</label>
                                     <textarea asp-for="Comment" class="form-control"></textarea>
-                                   
+
                                 </div>
                             </div>
-                            
+
                         </div>
-                        
+
                     </div>
                     <!-- /.box-body -->
 

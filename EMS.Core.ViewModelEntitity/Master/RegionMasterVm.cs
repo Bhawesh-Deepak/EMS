@@ -9,6 +9,7 @@ namespace EMS.Core.ViewModelEntitity.Master
     public class RegionMasterVm
     {
         public int Id { get; set; }
+        public int SessionId { get; set; }
         public string SeasonName { get; set; }
         public string AreaName { get; set; }
         public DateTime RegionStartDate { get; set; }

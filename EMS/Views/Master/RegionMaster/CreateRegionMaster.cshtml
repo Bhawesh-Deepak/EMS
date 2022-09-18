@@ -9,7 +9,7 @@
             <!-- general form elements -->
             <div class="box box-primary" style="height:500px">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Create Region Details</h3>
+                    <h3 class="box-title">Create Zone Details</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -36,14 +36,14 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="AreaName">Area Name</label>
+                                    <label asp-for="AreaName">Zone Name</label>
                                     <input type="text" asp-for="AreaName" class="form-control">
                                     <span asp-validation-for="AreaName" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="RegionStartDate">Region Start Date</label>
+                                    <label asp-for="RegionStartDate">Zone Start Date</label>
                                     <input asp-for="RegionStartDate" type="date" class="form-control">
                                     <span asp-validation-for="RegionStartDate" class="text-danger"></span>
                                 </div>
@@ -60,7 +60,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="ZoneStartDate">Zone Start Date</label>
+                                    <label asp-for="ZoneStartDate">Start Time Zone</label>
                                     <input asp-for="ZoneStartDate" type="date" class="form-control">
                                     <span asp-validation-for="ZoneStartDate" class="text-danger"></span>
                                 </div>
@@ -76,7 +76,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="AreaDescription">Area Description</label>
+                                    <label asp-for="AreaDescription">Zone Description</label>
                                     <input asp-for="AreaDescription" type="text" class="form-control">
                                     <span asp-validation-for="AreaDescription" class="text-danger"></span>
                                 </div>
@@ -84,8 +84,8 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="AreaCapacity">Area Capacity</label>
-                                    <input asp-for="AreaCapacity" type="text" class="form-control">
+                                    <label asp-for="AreaCapacity">Zone Capacity</label>
+                                    <input asp-for="AreaCapacity" type="number" class="form-control">
                                     <span asp-validation-for="AreaCapacity" class="text-danger"></span>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="AreaManagerEmail">Area Manager Email</label>
+                                    <label asp-for="AreaManagerEmail">Zone Manager Email</label>
                                     <input asp-for="AreaManagerEmail" type="text" class="form-control">
                                     <span asp-validation-for="AreaManagerEmail" class="text-danger"></span>
                                 </div>
@@ -102,7 +102,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label asp-for="ExpectedAttende">Expected Attende</label>
-                                    <input asp-for="ExpectedAttende" type="text" class="form-control">
+                                    <input asp-for="ExpectedAttende" type="number" class="form-control">
                                     <span asp-validation-for="ExpectedAttende" class="text-danger"></span>
                                 </div>
                             </div>
@@ -110,7 +110,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label asp-for="Space">Space</label>
-                                    <input asp-for="Space" type="text" class="form-control">
+                                    <input asp-for="Space" type="number" class="form-control">
                                     <span asp-validation-for="Space" class="text-danger"></span>
                                 </div>
                             </div>
@@ -125,7 +125,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label asp-for="AreaManagerName">Area Manage Name</label>
+                                    <label asp-for="AreaManagerName">Zone Manage Name</label>
                                     <input asp-for="AreaManagerName" type="text" class="form-control">
                                     <span asp-validation-for="AreaManagerName" class="text-danger"></span>
                                 </div>

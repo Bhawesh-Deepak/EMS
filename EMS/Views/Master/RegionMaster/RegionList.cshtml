@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<EMS.Core.ViewModelEntitity.Master.RegionMasterVm>
 <section class="content-header">
     <h1>
-        Region Master List
-        <small>Region List</small>
+        Zone Master List
+        <small>Zone List</small>
     </h1>
 </section>
 
@@ -10,10 +10,10 @@
 <section class="content" id="sectionUserList">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Region Master List</h3>
+            <h3 class="box-title">Zone Master List</h3>
             <div class="pull-right">
                 <button class="btn btn-success" onclick="AddRecord()">
-                    <i class="fa fa-plus">&nbsp;New Region</i>
+                    <i class="fa fa-plus">&nbsp;New Zone</i>
                 </button>
             </div>
         </div>
@@ -22,18 +22,18 @@
                 <thead>
                     <tr>
                         <th>Season Name</th>
-                        <th>Area Name</th>
-                        <th>Region Start Date</th>
-                        <th>Zone End Date</th>
+                        <th>Zone Name</th>
                         <th>Zone Start Date</th>
-                        <th>End Time Zone</th>
-                        <th>Area Description</th>
-                        <th>Area Capacity</th>
-                        <th>Area Manager Email</th>
+                        <th>Zone End Date</th>
+                        <th>Zone Start Time</th>
+                        <th>Zone End Time</th>
+                        <th>Zone Description</th>
+                        <th>Zone Capacity</th>
+                        <th>Zone Manager Email</th>
                         <th>Expected Attendee</th>
                         <th>Space</th>
                         <th>Target Group</th>
-                        <th>Area Manager Name</th>
+                        <th>Zone Manager Name</th>
                         <th>District Manager Mobile</th>
                         <th>Sex</th>
                         <th>Action</th>
@@ -130,7 +130,7 @@
         $.get("/RegionMaster/CreateRegionMaster", function (respData) {
             $("#divModalData").html(respData);
             $("#emsModal").modal('show');
-            $("#emsTitle").text("Create Region Master");
+            $("#emsTitle").text("Create Zone Master");
             $("#sectionUserList").removeClass('loading');
         })
 
@@ -139,10 +139,10 @@
     function EditRecord(id) {
 
         $("#sectionUserList").addClass('loading');
-        $.get("/Seasion/CreateSeason", { id: id }, function (respData) {
+        $.get("/RegionMaster/CreateRegionMaster", { id: id }, function (respData) {
             $("#divModalData").html(respData);
             $("#emsModal").modal('show');
-            $("#emsTitle").text("Create Region Master");
+            $("#emsTitle").text("Create Zone Master");
             $("#sectionUserList").removeClass('loading');
         })
     }
@@ -161,7 +161,7 @@
     function DeleteRecord(id) {
         $("#sectionUserList").addClass('loading');
         alertify.confirm("Are you sure want to Delete record ?", function () {
-            $.get("/Seasion/DeleteSeason", { id: id }, function (response) {
+            $.get("/RegionMaster/DeleteRegion", { id: id }, function (response) {
                 alertify.success(response);
                 $("#sectionUserList").removeClass('loading');
                 setTimeout(function () {
