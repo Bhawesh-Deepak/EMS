@@ -1,8 +1,8 @@
-﻿@model IEnumerable<EMS.Core.Entities.Survey.TaskMaster>
+﻿@model IEnumerable<EMS.Core.Entities.Survey.Monitoring>
 <section class="content-header">
     <h1>
-        Task Master
-        <small>Task Master List</small>
+        Monitoring
+        <small>Monitoring List</small>
     </h1>
 </section>
 
@@ -10,7 +10,7 @@
 <section class="content" id="sectionQuestionList">
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Task Master List</h3>
+            <h3 class="box-title">Monitoring List</h3>
             <div class="pull-right">
 
             </div>
@@ -21,15 +21,13 @@
                     <tr>
                         <th>S.No</th>
                         <th>Season Name </th>
-                        <th>Zone Name</th>
-                        <th>Agency Name</th>
+                        <th>Zone Name</th>                        
                         <th>Event Name</th>
-                        <th>Task Name</th>
-                        <th>Contact Reason</th>
-                        <th>Priority</th>
-                        <th>Task Status</th>
+                        <th>Percentage</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
                         <th>Comment</th>
-                        <th>Action</th>
+                        <th>Details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,41 +49,19 @@
                                         @data.EventName
                                     </td>
                                     <td>
-                                        @data.TaskName
+                                        @data.Percentage
                                     </td>
                                     <td>
-                                        @data.AgencyName
+                                        @data.StartDate
                                     </td>
-                                   
                                     <td>
-                                        @data.ContactReason
-                                    </td>
-                                    <td>@data.Priority</td>
-                                    <td>
-                                        @{
-
-                                        switch (data.TaskStatus)
-                                        {
-                                            case "Cancelled":
-                                                        <span style="color:red">Cancelled</span>
-                                                break;
-                                            case "Open":
-                                                        <span style="color:yellowgreen">Open</span>
-                                                break;
-                                            case "On Going":
-                                                        <span style="color:black">On Going</span>
-                                                break;
-                                            case "Done":
-                                                        <span style="color:green">Done</span>
-                                                break;
-                                        }
-                                        }
+                                        @data.EndDate
                                     </td>
                                     <td>
                                         @data.Comment
                                     </td>
                                     <td>
-                                        <a onclick="EditTaskManager(@data.Id, '@data.TaskName', '@data.TaskStatus')">
+                                        <a onclick="">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>

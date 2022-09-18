@@ -130,6 +130,8 @@
         var SessionId = this.value;
         $("#sectionUserList").addClass('loading');
         $.get("/RegionMaster/RegionListBySessionId", { SessionId: SessionId }, function (items) {
+
+            $('#AreaId').empty();
             $('#AreaId').prop('disabled', false);
 
             $('#AreaId').append($('<option>', {
