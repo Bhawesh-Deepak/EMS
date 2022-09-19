@@ -13,13 +13,13 @@ namespace EMS.Controllers.Survey
 {
     public class MonitoringController : Controller
     {
-        private readonly IGenericService<Monitoring, int> _IMonitoringService;
+        private readonly IGenericService<MonitoringDetails, int> _IMontiringDetailService;
         private readonly ISurveyService __ISurveyService;
 
 
-        public MonitoringController(IGenericService<Monitoring, int> monitoringService, ISurveyService serviceSurvey)
+        public MonitoringController(IGenericService<MonitoringDetails, int> monitoringService, ISurveyService serviceSurvey)
         {
-            _IMonitoringService = monitoringService;
+            _IMontiringDetailService = monitoringService;
             __ISurveyService = serviceSurvey;
         }
         public async Task<IActionResult> Index()
@@ -39,14 +39,10 @@ namespace EMS.Controllers.Survey
 
             return await Task.Run(() => PartialView(ViewHelpers.GetViewName("Survey", "TaskManagerUpdatePartial"), model));
         }
-        [HttpPost]
-        public async Task<IActionResult> PostUpdateTaskStatus(UpdateTaskVm model)
+        public async Task<IActionResult> GetMonitorDetails(int id)
         {
-            var taskModel = await _IMonitoringService.GetSingle(x => x.Id == model.TaskId);            
-            taskModel.Comment = model.Comment;
-
-            var response = await _IMonitoringService.UpdateEntity(taskModel);
-            return Json(ResponseHelper.ResponseMessage(response, Core.Entities.Common.OperationType.Update));
+            var response = await _IMontiringDetailService.GetList(x => x.IsActive && !x.IsDeleted && x.MonitoringId == id);
+            return PartialView(ViewHelpers.GetViewName("Survey", "MonitorDetailPartial"), response);
         }
     }
 }

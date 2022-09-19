@@ -158,15 +158,15 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
             return updateQuestion;
         }
 
-       
-        async Task<List<MonitoringAndDetailsVm>> ISurveyService.GetMonitoringAndDetailsList()
+
+        public async Task<List<MonitoringAndDetailsVm>> GetMonitoringAndDetailsList()
         {
             var monitoringModels = await _IMonitoringService.GetList(x => !x.IsDeleted && x.IsActive);
             var monitoringDetailsModels = await _IMonitoringDetailsService.GetList(x => x.IsActive && !x.IsDeleted);
 
             var responseModels = (from mm in monitoringModels
                                   join mdm in monitoringDetailsModels
-                                  on mm.DetailsId equals mdm.Id
+                                  on mm.Id equals mdm.MonitoringId
                                   select new MonitoringAndDetailsVm
                                   {
                                       MonitoringId = mm.Id,
@@ -176,7 +176,9 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
                                       EventPercentage = mm.Percentage,
                                       StartDate = mm.StartDate,
                                       EndDate = mm.EndDate,
-                                      Comment = mm.Comment
+                                      Comment = mm.Comment,
+                                      AgancyName = mdm.AgancyName,
+                                      Percentage = mdm.Percentage
                                   }).ToList();
 
             return responseModels;

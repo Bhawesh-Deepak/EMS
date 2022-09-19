@@ -30,68 +30,61 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{
-                        int count = 1;
-                        foreach (var data in Model)
+
+
+                    @foreach (var data in Model.GroupBy(x => x.MonitoringId))
+                    {
+                        <tr>
+                            <td>
+
+                                <a onclick="ExpandCollapse(@data.Key)">Expand Collapse</a>
+                            </td>
+                            <td>
+                                @data?.First()?.SeasonName
+                            </td>
+                            <td>
+                                @data?.First()?.ZoneName
+                            </td>
+                            <td>
+                                @data?.First()?.EventName
+                            </td>
+                            <td>
+                                @data?.First()?.EventPercentage
+                            </td>
+                            <td>
+                                @data?.First()?.StartDate
+                            </td>
+                            <td>
+                                @data?.First()?.EndDate
+                            </td>
+                            <td>
+                                @data?.First()?.Comment
+                            </td>
+                            <td>
+                                <a onclick="">
+                                    <i class="fa fa-eye" onclick="GetDetails(@data.Key)"></i>
+                                </a>
+                            </td>
+
+
+                        </tr>
+                        @*@foreach (var item in data)
                         {
                             <tr>
-                                <td>
-                                    @count
-                                </td>
-                                <td>
-                                    @data.SeasonName
-                                </td>
-                                <td>
-                                    @data.ZoneName
-                                </td>
-                                <td>
-                                    @data.EventName
-                                </td>
-                                <td>
-                                    @data.EventPercentage
-                                </td>
-                                <td>
-                                    @data.StartDate
-                                </td>
-                                <td>
-                                    @data.EndDate
-                                </td>
-                                <td>
-                                    @data.Comment
-                                </td>
-                                <td>
-                                    <a onclick="">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>
-                                                    Agancy
-                                                </th>
-                                                <th>
-                                                    Percentage
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </td>
 
+                                <td colspan="5">
+                                    @item.AgancyName
+                                </td>
+                                <td colspan="4">
+                                    @item.Percentage
+                                </td>
                             </tr>
+                        }*@
 
 
-                            count++;
-                        }
+
                     }
+
 
                 </tbody>
 
@@ -127,5 +120,19 @@
 
     function AjaxCallBegin() {
         $("#sectionUserCreate").addClass('loading');
+    }
+
+    function ExpandCollapse(id) {
+        $("#" + id).slideToggle();
+    }
+
+    function GetDetails(id) {
+        $("#sectionQuestionList").addClass('loading');
+        $.get("/Monitoring/GetMonitorDetails", { id: id }, function (resp) {
+            $("#divModalData").html(resp);
+            $("#emsModal").modal('show');
+            $("#emsTitle").text("Monitor Details");
+            $("#sectionQuestionList").removeClass('loading');
+        })
     }
 </script>

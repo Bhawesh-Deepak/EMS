@@ -17,7 +17,8 @@ namespace EMS.Core.ViewModelEntitity.Survey
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Comment { get; set; }
-        
-        public List<MonitoringDetails> lstMonitoringDetails { get; set; }
+
+        public string AgancyName { get; set; }
+        public string Percentage { get; set; }
     }
 }
