@@ -1,4 +1,5 @@
 ﻿using EMS.Core.Entities.Survey;
+using EMS.Core.ViewModelEntitity.Master;
 using EMS.Core.ViewModelEntitity.Survey;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,6 @@ namespace EMS.Core.Services.Survey
         Task<List<Options>> GetOptionsList(int questionId);
         Task<bool> DeleteQuestion(int id);
         Task<bool> UpdateSurveyQuestion(SurveyVm model, List<string> optionsValue);
-
+        Task<List<MonitoringAndDetailsVm>> GetMonitoringAndDetailsList();
     }
 }

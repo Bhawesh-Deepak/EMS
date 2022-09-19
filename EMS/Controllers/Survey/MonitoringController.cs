@@ -1,5 +1,6 @@
 ﻿using EMS.Core.Entities.Survey;
 using EMS.Core.Services.GenericService;
+using EMS.Core.Services.Survey;
 using EMS.Core.ViewModelEntitity.Survey;
 using EMS.Helpers;
 using Microsoft.AspNetCore.Mvc;
@@ -13,14 +14,17 @@ namespace EMS.Controllers.Survey
     public class MonitoringController : Controller
     {
         private readonly IGenericService<Monitoring, int> _IMonitoringService;
+        private readonly ISurveyService __ISurveyService;
 
-        public MonitoringController(IGenericService<Monitoring, int> monitoringService)
+
+        public MonitoringController(IGenericService<Monitoring, int> monitoringService, ISurveyService serviceSurvey)
         {
             _IMonitoringService = monitoringService;
+            __ISurveyService = serviceSurvey;
         }
         public async Task<IActionResult> Index()
         {
-            var response = await _IMonitoringService.GetList(x => !x.IsDeleted);
+            var response = await __ISurveyService.GetMonitoringAndDetailsList();
             return View(ViewHelpers.GetViewName("Survey", "Monitoring"), response);
         }
 

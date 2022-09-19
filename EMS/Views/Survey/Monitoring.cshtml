@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EMS.Core.Entities.Survey.Monitoring>
+﻿@model IEnumerable<EMS.Core.ViewModelEntitity.Survey.MonitoringAndDetailsVm>
 <section class="content-header">
     <h1>
         Monitoring
@@ -12,7 +12,6 @@
         <div class="box-header with-border">
             <h3 class="box-title">Monitoring List</h3>
             <div class="pull-right">
-
             </div>
         </div>
         <div class="box-body">
@@ -21,7 +20,7 @@
                     <tr>
                         <th>S.No</th>
                         <th>Season Name </th>
-                        <th>Zone Name</th>                        
+                        <th>Zone Name</th>
                         <th>Event Name</th>
                         <th>Percentage</th>
                         <th>Start Date</th>
@@ -35,38 +34,60 @@
                         int count = 1;
                         foreach (var data in Model)
                         {
-                                <tr>
-                                    <td>
-                                        @count
-                                    </td>
-                                    <td>
-                                        @data.SeasonName
-                                    </td>
-                                    <td>
-                                        @data.ZoneName
-                                    </td>
-                                    <td>
-                                        @data.EventName
-                                    </td>
-                                    <td>
-                                        @data.Percentage
-                                    </td>
-                                    <td>
-                                        @data.StartDate
-                                    </td>
-                                    <td>
-                                        @data.EndDate
-                                    </td>
-                                    <td>
-                                        @data.Comment
-                                    </td>
-                                    <td>
-                                        <a onclick="">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                    </td>
+                            <tr>
+                                <td>
+                                    @count
+                                </td>
+                                <td>
+                                    @data.SeasonName
+                                </td>
+                                <td>
+                                    @data.ZoneName
+                                </td>
+                                <td>
+                                    @data.EventName
+                                </td>
+                                <td>
+                                    @data.EventPercentage
+                                </td>
+                                <td>
+                                    @data.StartDate
+                                </td>
+                                <td>
+                                    @data.EndDate
+                                </td>
+                                <td>
+                                    @data.Comment
+                                </td>
+                                <td>
+                                    <a onclick="">
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Agancy
+                                                </th>
+                                                <th>
+                                                    Percentage
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
 
-                                </tr>
+                            </tr>
+
 
                             count++;
                         }

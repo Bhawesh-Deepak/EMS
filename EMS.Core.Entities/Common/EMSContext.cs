@@ -32,5 +32,7 @@ namespace EMS.Core.Entities.Common
         public virtual DbSet<ModuleMaster> ModuleMasters { get; set; }
         public virtual DbSet<RoleAccess> RoleAccesses { get; set; }
         public virtual DbSet<TaskMaster> TaskMasters { get; set; }
+        public virtual DbSet<Monitoring> Monitoring { get; set; }
+        public virtual DbSet<MonitoringDetails> MonitoringDetails { get; set; }
     }
 }

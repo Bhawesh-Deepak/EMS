@@ -1,4 +1,6 @@
-﻿using EMS.Core.Entities.Survey;
+﻿using EMS.Core.Entities.Master;
+using EMS.Core.Entities.Survey;
+using EMS.Core.Repository.GenericRepository;
 using EMS.Core.Services.GenericService;
 using EMS.Core.Services.Survey;
 using EMS.Core.ViewModelEntitity.Survey;
@@ -15,11 +17,17 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
         private readonly IGenericService<Questions, int> _IQuestionService;
         private readonly IGenericService<Options, int> _IOptionsService;
 
+        private readonly IGenericService<Monitoring, int> _IMonitoringService;
+        private readonly IGenericService<MonitoringDetails, int> _IMonitoringDetailsService;
+
         public SurveyService(IGenericService<Questions, int> questionService,
-            IGenericService<Options, int> optionsService)
+            IGenericService<Options, int> optionsService, IGenericService<Monitoring, int> monitoringService
+            , IGenericService<MonitoringDetails, int> monitoringDetailsService)
         {
             _IQuestionService = questionService;
             _IOptionsService = optionsService;
+            _IMonitoringService = monitoringService;
+            _IMonitoringDetailsService = monitoringDetailsService;
 
         }
 
@@ -112,7 +120,7 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
 
             var updateQuestion = await _IQuestionService.UpdateEntity(model.QuestionDetail);
 
-            if (updateQuestion) 
+            if (updateQuestion)
             {
                 var deletePreviousOptions = await _IOptionsService.GetList(x => x.QuestionId == model.QuestionDetail.Id);
                 deletePreviousOptions.ToList().ForEach(data =>
@@ -123,7 +131,8 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
                 });
                 var deleteOptionResponse = await _IOptionsService.UpdateEntities(deletePreviousOptions.ToArray());
 
-                if (deleteOptionResponse) {
+                if (deleteOptionResponse)
+                {
 
                     var optionModels = new List<Options>();
 
@@ -147,6 +156,30 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
             }
 
             return updateQuestion;
+        }
+
+       
+        async Task<List<MonitoringAndDetailsVm>> ISurveyService.GetMonitoringAndDetailsList()
+        {
+            var monitoringModels = await _IMonitoringService.GetList(x => !x.IsDeleted && x.IsActive);
+            var monitoringDetailsModels = await _IMonitoringDetailsService.GetList(x => x.IsActive && !x.IsDeleted);
+
+            var responseModels = (from mm in monitoringModels
+                                  join mdm in monitoringDetailsModels
+                                  on mm.DetailsId equals mdm.Id
+                                  select new MonitoringAndDetailsVm
+                                  {
+                                      MonitoringId = mm.Id,
+                                      SeasonName = mm.SeasonName,
+                                      ZoneName = mm.ZoneName,
+                                      EventName = mm.EventName,
+                                      EventPercentage = mm.Percentage,
+                                      StartDate = mm.StartDate,
+                                      EndDate = mm.EndDate,
+                                      Comment = mm.Comment
+                                  }).ToList();
+
+            return responseModels;
         }
     }
 }
