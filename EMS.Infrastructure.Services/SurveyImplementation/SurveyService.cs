@@ -178,7 +178,8 @@ namespace EMS.Infrastructure.Services.SurveyImplementation
                                       EndDate = mm.EndDate,
                                       Comment = mm.Comment,
                                       AgancyName = mdm.AgancyName,
-                                      Percentage = mdm.Percentage
+                                      Percentage = mdm.Percentage,
+                                      IsComplete= mm.IsComplete
                                   }).ToList();
 
             return responseModels;

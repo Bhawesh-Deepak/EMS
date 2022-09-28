@@ -18,6 +18,7 @@ namespace EMS.Core.Entities.Survey
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string Comment { get; set; }
+        public bool IsComplete { get; set; }
 
     }
 }

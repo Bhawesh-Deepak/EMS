@@ -15,80 +15,91 @@
             </div>
         </div>
         <div class="box-body">
-            <table id="questionTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>S.No</th>
-                        <th>Season Name </th>
-                        <th>Zone Name</th>
-                        <th>Event Name</th>
-                        <th>Percentage</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Comment</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-
-                    @foreach (var data in Model.GroupBy(x => x.MonitoringId))
-                    {
+           
+                <table id="questionTable" class="table table-striped table-bordered dt-responsive nowrap" width="100%" cellspacing="0">
+                    <thead>
                         <tr>
-                            <td>
-
-                                <a onclick="ExpandCollapse(@data.Key)">Expand Collapse</a>
-                            </td>
-                            <td>
-                                @data?.First()?.SeasonName
-                            </td>
-                            <td>
-                                @data?.First()?.ZoneName
-                            </td>
-                            <td>
-                                @data?.First()?.EventName
-                            </td>
-                            <td>
-                                @data?.First()?.EventPercentage
-                            </td>
-                            <td>
-                                @data?.First()?.StartDate
-                            </td>
-                            <td>
-                                @data?.First()?.EndDate
-                            </td>
-                            <td>
-                                @data?.First()?.Comment
-                            </td>
-                            <td>
-                                <a onclick="">
-                                    <i class="fa fa-eye" onclick="GetDetails(@data.Key)"></i>
-                                </a>
-                            </td>
-
+                            <th>Action</th>
+                            <th>Season Name </th>
+                            <th>Zone Name</th>
+                            <th>Event Name</th>
+                            <th>Percentage</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Comment</th>
+                            <th>Details</th>
 
                         </tr>
-                        @*@foreach (var item in data)
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var data in Model.GroupBy(x => x.MonitoringId))
                         {
+
+
                             <tr>
+                                <td>
+                                    @if (data?.First()?.EventPercentage == "100")
+                                    {
+                                        if (data?.First()?.IsComplete == true)
+                                        {
+                                            <span style="color:green">Completed</span>
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" value="@data?.First()?.MonitoringId" onchange="IsCompleteEvent()" class="chkChecked" />
+                                        }
+                                    }
 
-                                <td colspan="5">
-                                    @item.AgancyName
                                 </td>
-                                <td colspan="4">
-                                    @item.Percentage
+                                <td>
+                                    @data?.First()?.SeasonName
                                 </td>
+                                <td>
+                                    @data?.First()?.ZoneName
+                                </td>
+                                <td>
+                                    @data?.First()?.EventName
+                                </td>
+                                <td>
+                                    @data?.First()?.EventPercentage
+                                </td>
+                                <td>
+                                    @data?.First()?.StartDate
+                                </td>
+                                <td>
+                                    @data?.First()?.EndDate
+                                </td>
+                                <td>
+                                    @data?.First()?.Comment
+                                </td>
+                                <td>
+                                    <a onclick="">
+                                        <i class="fa fa-eye" onclick="GetDetails(@data.Key)"></i>
+                                    </a>
+                                </td>
+
+
                             </tr>
-                        }*@
+
+                        }
 
 
+                    </tbody>
 
-                    }
+                </table>
+          
+            <div class="row">
+                <div class="col-md-12">
+                    <button class="btn btn-success pull-right" onclick="SaveMonitor()" id="btnSave" >Save</button>
+                </div>
+               
+            </div>
+        </div>
 
-
-                </tbody>
-
-            </table>
+        <div class="footer">
+          
         </div>
     </div>
     @await Html.PartialAsync("~/Views/Shared/CommonModalPartial.cshtml")
@@ -134,5 +145,36 @@
             $("#emsTitle").text("Monitor Details");
             $("#sectionQuestionList").removeClass('loading');
         })
+    }
+
+    function IsCompleteEvent() {
+        $(".chkChecked").each(function () {
+            if (this.checked) {
+                $("#btnSave").removeAttr('disabled');
+            }
+        });
+    }
+
+    function SaveMonitor() {
+        var array = new Array();
+        $(".chkChecked").each(function () {
+            if (this.checked) {
+                array.push(parseInt(this.value));
+            }
+        });
+
+        setTimeout(function () {
+            if (array.length > 0) {
+                var value = array.join(",");
+                debugger
+                $.get("/Monitoring/SaveMonitoryStatus", { id: value }, function (response) {
+                    alertify.alert(response);
+                    location.reload();
+                })
+            }
+            else {
+                alertify.success("No Task has been selected, Please select Task to proceed !");
+            }
+        }, 500)
     }
 </script>

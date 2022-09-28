@@ -15,12 +15,15 @@ namespace EMS.Controllers.Survey
     {
         private readonly IGenericService<MonitoringDetails, int> _IMontiringDetailService;
         private readonly ISurveyService __ISurveyService;
+        private readonly IGenericService<Monitoring, int> _IMontiringService;
 
 
-        public MonitoringController(IGenericService<MonitoringDetails, int> monitoringService, ISurveyService serviceSurvey)
+        public MonitoringController(IGenericService<MonitoringDetails, int> monitoringService, 
+            ISurveyService serviceSurvey, IGenericService<Monitoring, int> monitoringGenericService)
         {
             _IMontiringDetailService = monitoringService;
             __ISurveyService = serviceSurvey;
+            _IMontiringService = monitoringGenericService;
         }
         public async Task<IActionResult> Index()
         {
@@ -43,6 +46,20 @@ namespace EMS.Controllers.Survey
         {
             var response = await _IMontiringDetailService.GetList(x => x.IsActive && !x.IsDeleted && x.MonitoringId == id);
             return PartialView(ViewHelpers.GetViewName("Survey", "MonitorDetailPartial"), response);
+        }
+
+        public async Task<IActionResult> SaveMonitoryStatus(string id)
+        {
+            var ids = id.Split(",");
+            var responseModels = new List<Monitoring>();
+            ids.ToList().ForEach(data => {
+                var model = _IMontiringService.GetSingle(x => x.Id == Convert.ToInt32(data)).Result;
+                model.IsComplete = true;
+                responseModels.Add(model);
+            });
+
+            var UpadateResponse = await _IMontiringService.UpdateEntities(responseModels.ToArray());
+            return Json("Data has been Updated !");
         }
     }
 }
