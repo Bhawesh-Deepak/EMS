@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<EMS.Core.Entities.Survey.Questions>
+@using System.Text.RegularExpressions;
 <section class="content-header">
     <h1>
         Question Details
@@ -29,6 +30,8 @@
                 <tbody>
                     @foreach (var data in Model)
                     {
+                        var question = Regex.Replace(data.Question, @"<(.|\n)*?>", string.Empty);
+                        question = Regex.Replace(question, @"\r\n", string.Empty);
                         <tr>
                             <td>
                                 @data.TopicName
@@ -43,7 +46,7 @@
                                 <a class="btn btn-danger" onclick="DeleteQuestion(@data.Id)">
                                     <i class="fa fa-trash"> </i>
                                 </a>
-                                <a class="btn btn-primary" title="Question Options Details" onclick="GetOptionValue(@data.Id)">
+                                <a class="btn btn-primary" title="Question Options Details" onclick="GetOptionValue(@data.Id,'@question')">
                                     <i class="fa fa-eye"> </i>
                                 </a>
                             </td>
@@ -57,17 +60,19 @@
     @await Html.PartialAsync("~/Views/Shared/CommonModalPartial.cshtml")
 </section>
 
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $("#questionTable").DataTable({})
     });
 
-    function GetOptionValue(id) {
+    function GetOptionValue(id, question) {
         $("#sectionQuestionList").addClass('loading');
         $.get("/Survey/GetOptionsList", { questionId:id}, function (responseData) {
             $("#divModalData").html(responseData);
             $("#emsModal").modal('show');
-            $("#emsTitle").text("Question Option List");
+            $("#emsTitle").text("Question Option List for"+ "  ("+ question +")  ");
             $("#sectionQuestionList").removeClass('loading');
         });
     }

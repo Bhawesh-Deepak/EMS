@@ -18,12 +18,14 @@ namespace EMS.Controllers.Survey
         private readonly ISurveyService __ISurveyService;
         private readonly IGenericService<Questions, int> _IQuestionService;
         private readonly IGenericService<Options, int> _IOptionsService;
+        private readonly IGenericService<TaskMaster, int> _ITaskMasterService;
         public SurveyController(ISurveyService surveyService,
-            IGenericService<Questions, int> questionService, IGenericService<Options, int> optionService)
+            IGenericService<Questions, int> questionService, IGenericService<Options, int> optionService, IGenericService<TaskMaster, int> iTaskMasterService)
         {
             __ISurveyService = surveyService;
             _IQuestionService = questionService;
             _IOptionsService = optionService;
+            _ITaskMasterService = iTaskMasterService;
         }
 
         public async Task<IActionResult> Index(int id)
@@ -63,10 +65,38 @@ namespace EMS.Controllers.Survey
 
         public async Task<IActionResult> GetOptionsList(int questionId)
         {
+            ViewBag.TaskList = await _ITaskMasterService.GetAll(x => x.IsActive && !x.IsDeleted);
             var response = await __ISurveyService.GetOptionsList(questionId);
             return PartialView(ViewHelpers.GetViewName("Survey", "OptionDetailPartial"), response);
         }
 
+        public async Task<IActionResult> TaskOptionMapping(string optionIds, string option1Values, string option2Values)
+        {
+            if (optionIds == null || option1Values == null || option2Values == null)
+            {
+                return Json("Please select Option and Task for mapping");
+            }
+            var optionList = optionIds.Split(",").ToList();
+
+            for (int i = 0; i < optionList.Count; i++)
+            {
+                if (i == 0)
+                {
+                    var optionModel = await _IOptionsService.GetSingle(x => x.Id == Convert.ToInt32(optionList[i]));
+                    optionModel.TaskId = option1Values;
+                    var updateResponse = await _IOptionsService.UpdateEntity(optionModel);
+                }
+                else if(i==1)
+                {
+                    var optionModel = await _IOptionsService.GetSingle(x => x.Id == Convert.ToInt32(optionList[i]));
+                    optionModel.TaskId = option2Values;
+                    var updateResponse = await _IOptionsService.UpdateEntity(optionModel);
+                }
+
+            }
+
+            return Json("Task option mapping successfully ! Completed !");
+        }
         public async Task<IActionResult> DeleteRecord(int id)
         {
             var deleteResponse = await __ISurveyService.DeleteQuestion(id);
@@ -94,7 +124,7 @@ namespace EMS.Controllers.Survey
                 parentQuestion.ChildQuestionId = childQuestionid;
                 parentQuestion.OptionId = optionId;
                 parentQuestion.ChildQuestionId1 = childQuestion1Id;
-                parentQuestion.ChildOptionId1 =childQuestion1Id==0?0: parentOptionId1;
+                parentQuestion.ChildOptionId1 = childQuestion1Id == 0 ? 0 : parentOptionId1;
 
                 var updateResponse = await _IQuestionService.UpdateEntity(parentQuestion);
                 return Json(ResponseHelper.ResponseMessage(updateResponse, OperationType.Create));

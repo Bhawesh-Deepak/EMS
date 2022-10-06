@@ -16,5 +16,6 @@ namespace EMS.Core.Entities.Survey
 
         [Required(ErrorMessage ="OptionValue is required !")]
         public string OptionValue { get; set; }
+        public string TaskId { get; set; }
     }
 }
