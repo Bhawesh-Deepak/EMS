@@ -86,7 +86,7 @@ namespace EMS.Controllers.Survey
                     optionModel.TaskId = option1Values;
                     var updateResponse = await _IOptionsService.UpdateEntity(optionModel);
                 }
-                else if(i==1)
+                else if (i == 1)
                 {
                     var optionModel = await _IOptionsService.GetSingle(x => x.Id == Convert.ToInt32(optionList[i]));
                     optionModel.TaskId = option2Values;
@@ -137,6 +137,30 @@ namespace EMS.Controllers.Survey
         {
             var optionList = await _IOptionsService.GetList(x => x.QuestionId == questionId && !x.IsDeleted);
             return Json(optionList);
+        }
+
+        public async Task<IActionResult> CreateTask()
+        {
+            return await Task.Run(() =>
+                PartialView(ViewHelpers.GetViewName("Survey", "_CreateTaskDetailPartial")));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTaskDetails(TaskMaster model)
+        {
+            model.IsActive = true;
+            model.IsDeleted = false;
+            model.CreatedBy = 1;
+            model.CreatedDate = DateTime.Now;
+            model.TaskStatus = "open";
+            model.SeasonName = String.Empty;
+            model.ZoneName = String.Empty;
+            model.AgencyName = String.Empty;
+            model.Priority = String.Empty;
+            model.Comment = String.Empty;
+
+            var response = await _ITaskMasterService.CreateEntity(model);
+            return Json("Task has been created successfully !");
         }
 
         //public async Task<IActionResult> GetParentChildQuestion()

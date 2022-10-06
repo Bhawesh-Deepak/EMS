@@ -43,6 +43,8 @@ namespace EMS.Controllers.Survey
             taskModel.TaskStatus = model.StatusId;
             taskModel.Comment = model.Comment;
 
+
+
             var response = await _ITaskMasterService.UpdateEntity(taskModel);
             return Json(ResponseHelper.ResponseMessage(response, Core.Entities.Common.OperationType.Update));
         }

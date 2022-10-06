@@ -1,0 +1,77 @@
+﻿@model EMS.Core.Entities.Survey.TaskMaster
+
+<section class="content" id="sectionUserCreate">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary" style="height:500px">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Add New Task</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form id="form" method="post" data-ajax="true" data-ajax-method="post"
+                      asp-action="CreateTaskDetails" data-ajax-begin="AjaxCallBegin()"
+                      asp-controller="Survey" data-ajax-success="Success">
+                    <div class="">
+                        <div class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="hidden" asp-for="Id" />
+                                    <input type="hidden" asp-for="CreatedBy" />
+                                    <input type="hidden" asp-for="CreatedDate" />
+                                    <label asp-for="EventName">Event Name</label>
+                                    <input type="text" class="form-control" placeholder="Event Name" asp-for="EventName" />
+                                    <span asp-validation-for="EventName"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ZoneName">Task Name</label>
+                                    <input type="text" asp-for="TaskName" placeholder="Please enter Task Name" class="form-control">
+                                    <span asp-validation-for="TaskName" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label asp-for="ContactReason">Contact Reason</label>
+                                    <input asp-for="ContactReason" type="text" placeholder="Please enter Contact Reason" class="form-control">
+                                    <span asp-validation-for="ContactReason" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <div class="col-md-10">
+                            <button class="btn btn-success pull-right" type="submit">
+                                Save
+                            </button>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-danger modalButton pull-right" data-dismiss="modal">
+                                Close
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+<script>
+    function AjaxCallBegin() {
+        $("#sectionUserCreate").addClass('loading');
+    }
+
+function Success() 
+{
+     $("#sectionUserCreate").removeClass('loading');
+}
+</script>
